@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -6,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -28,14 +30,37 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+
+  const [enteredEmail, setEnteredEmail] = useState('');
+  const [enteredPassword, setEnteredPassword] = useState('');
+
+  const inputHandlerEmail = (event) => {
+    setEnteredEmail(event.target.value);
+  };
+
+  const inputHandlerPassword = (event) => {
+    setEnteredPassword(event.target.value);
+  };
+
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const url = 'http://localhost:8000/signup' ;
+    const method = 'POST' ;
+    const response = await fetch(url,{
+      method,
+      body: JSON.stringify({ email : enteredEmail , password : enteredPassword }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: response.get('email'),
+      password: response.get('password'),
     });
   };
+
+
 
   return (
     <ThemeProvider theme={defaultTheme} >
@@ -68,6 +93,8 @@ export default function SignUp() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={enteredEmail}
+              onChange={inputHandlerEmail}
             />
             <TextField
               margin="normal"
@@ -77,7 +104,9 @@ export default function SignUp() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              autoComplete="current-password" 
+              value={enteredPassword}
+              onChange={inputHandlerPassword}
             />
             
             <Button
@@ -88,6 +117,13 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
+            <Grid container>
+              <Grid item>
+                <Link href="/signin" variant="body2">
+                  {"Already have an account? Sign In instead"}
+                </Link>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />

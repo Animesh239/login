@@ -1,6 +1,10 @@
 let users =[];
 
-export function postSignUp(req,res,next){
+exports.getUsers=(req,res,next)=>{
+    res.json({ message: "All users", users : users  });
+}
+
+exports.postSignUp=(req,res,next)=>{
     const newUser = {
         id: new Date().toISOString(),
         name: req.body.name,
@@ -11,13 +15,13 @@ export function postSignUp(req,res,next){
       res.json({ message: "new User added", userDetails: newUser });
 }
 
-export async function postSignIn(req,res,next){
+exports.postSignIn = async(req,res,next)=>{
     const email = req.body.email;
     const password = req.body.password;
   
     const user = await users.find((user) => {
       return user.email === email 
-    });
+    }); 
   
     if (!user) {
             return res.json({ message: "email does not exist" });
