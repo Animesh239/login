@@ -128,7 +128,7 @@ function ResponsiveAppBar() {
           </Box>
           <Box sx={{ p: "20px" }}>
             <a href="/signup">
-              <Button variant="contained" color="success">
+              <Button variant="contained" color="success" sx={{ m: "0px 10px" }}>
                 Sign Up
               </Button>
             </a>
@@ -136,7 +136,7 @@ function ResponsiveAppBar() {
               <Button
                 variant="contained"
                 color="success"
-                sx={{ m: "0px 20px" }}
+                sx={{ m: "0px 10px" }}
               >
                 Sign In
               </Button>

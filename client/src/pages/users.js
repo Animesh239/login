@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 
+import './Users.css';
+
 const Users = () => {
   const [users, setUsers] = useState([]);
+
 //   const [enteredText, setEnteredText] = useState("");
 
   const getUsers = useCallback(async () => {
@@ -75,10 +78,14 @@ const Users = () => {
           <button type="submit">{'Add'} Todo</button>
         </form>
       </div> */}
-      {users && users.length > 0 && (
+      
+       
+       { users && users.length > 0 (
         <ul className="users__list">
           {users.map((user) => (
             <li key={user.id}>
+              <span>{user.name}</span>
+              <span>{user.email}</span>
               <span>{user.name}</span>
               {/* <div className="todo__actions">
                 <button onClick={startEditHandler.bind(null, todo)}>
@@ -91,7 +98,7 @@ const Users = () => {
             </li>
           ))}
         </ul>
-      )}
+      )}  
     </React.Fragment> 
   );
 };

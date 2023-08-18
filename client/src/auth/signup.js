@@ -17,7 +17,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+       Connect.IO
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -33,6 +33,7 @@ export default function SignUp() {
 
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
+  const [enteredName, setEnteredName] = useState('');
 
   const inputHandlerEmail = (event) => {
     setEnteredEmail(event.target.value);
@@ -42,6 +43,10 @@ export default function SignUp() {
     setEnteredPassword(event.target.value);
   };
 
+  const inputHandlerName = (event) => {
+    setEnteredName(event.target.value);
+  };
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -49,15 +54,12 @@ export default function SignUp() {
     const method = 'POST' ;
     const response = await fetch(url,{
       method,
-      body: JSON.stringify({ email : enteredEmail , password : enteredPassword }),
+      body: JSON.stringify({name : enteredName , email : enteredEmail , password : enteredPassword }),
       headers: {
         'Content-Type': 'application/json',
       }
     })
-    console.log({
-      email: response.get('email'),
-      password: response.get('password'),
-    });
+    console.log({response});
   };
 
 
@@ -78,12 +80,23 @@ export default function SignUp() {
           <AccountCircleIcon/>
           </Avatar>
           <Typography component="h1" variant="h5">
-            Welcome to <u>website name</u>
+            Welcome to <i>connect.IO</i>
           </Typography>
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Username"
+              name="name"
+              autoFocus
+              value={enteredName}
+              onChange={inputHandlerName}
+            />
             <TextField
               margin="normal"
               required
@@ -92,7 +105,7 @@ export default function SignUp() {
               label="Email Address"
               name="email"
               autoComplete="email"
-              autoFocus
+              
               value={enteredEmail}
               onChange={inputHandlerEmail}
             />

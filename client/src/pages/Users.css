@@ -1,0 +1,50 @@
+.users__form,
+.users__list {
+  margin: 3rem auto;
+  width: 90%;
+  max-width: 40rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  padding: 1rem;
+}
+
+.users__form label,
+.users__form input {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.users__form label {
+  font-weight: bold;
+}
+
+.users__form input {
+  font: inherit;
+  border: 1px solid #ccc;
+}
+
+.users__form input:focus {
+  border-color: purple;
+}
+
+.users__list {
+  list-style: none;
+}
+
+.users__list li {
+  margin: 1rem auto;
+  padding: 1rem;
+  border: 1px solid purple;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.users__list span {
+  font-weight: bold;
+  color: purple;
+}
+
+.user__actions button {
+  margin-left: 1rem;
+}
