@@ -14,6 +14,8 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { green } from '@mui/material/colors';
+import { Link } from "react-router-dom";
+
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -127,12 +129,12 @@ function ResponsiveAppBar() {
             ))}
           </Box>
           <Box sx={{ p: "20px" }}>
-            <a href="/signup">
+            <Link to="/auth/signup">
               <Button variant="contained" color="success" sx={{ m: "0px 10px" }}>
                 Sign Up
               </Button>
-            </a>
-            <a href="/signin">
+            </Link>
+            <Link to="/auth/signin">
               <Button
                 variant="contained"
                 color="success"
@@ -140,7 +142,7 @@ function ResponsiveAppBar() {
               >
                 Sign In
               </Button>
-            </a>
+            </Link>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

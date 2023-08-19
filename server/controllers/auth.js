@@ -1,14 +1,12 @@
 let users = [];
-let isAuthenticated;
+let loggedInUsers = [];
 
 exports.getUsers = (req, res, next) => {
-  isAuthenticated = false ;
   // Pass the `isAuthenticated` prop from the server to the client
   res.json({
     message: "All users",
     users: users,
   });
-
 };
 
 exports.postSignUp = (req, res, next) => {
@@ -17,10 +15,11 @@ exports.postSignUp = (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
+    is_logged_in: false
   };
 
   users.push(newUser);
-  isAuthenticated = false
+  // res.redirect('/auth/signin')
   res.json({
     message: "new User added",
     userDetails: newUser,
@@ -43,8 +42,17 @@ exports.postSignIn = async (req, res, next) => {
     return res.json({ message: "invalid password" });
   }
 
-  isAuthenticated = true;
+    // Update the user's is_logged_in status to true
+    user.is_logged_in = true;
+
+    // Save the user
+    
+  
+
   console.log("user loggedin successfully");
+
+  // res.redirect('/')
+    
 
   res.json({
     messsage: "user authenticated",
@@ -52,6 +60,16 @@ exports.postSignIn = async (req, res, next) => {
   });
 };
 
-exports.getSignIn = (req,res,next)=>{
-  
-}
+exports.getLoggedInUsers = (req, res, next) => {
+
+  for (let user of users) {
+    if (user.is_logged_in) {
+      loggedInUsers.push(user);
+    }
+  }
+
+  res.json({
+    message: "Logged in users",
+    loggedInUsers: loggedInUsers,
+  });
+};

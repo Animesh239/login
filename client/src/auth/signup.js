@@ -50,7 +50,7 @@ export default function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = 'http://localhost:8000/signup' ;
+    const url = 'http://localhost:8000/auth/signup' ;
     const method = 'POST' ;
     const response = await fetch(url,{
       method,
@@ -105,7 +105,6 @@ export default function SignUp() {
               label="Email Address"
               name="email"
               autoComplete="email"
-              
               value={enteredEmail}
               onChange={inputHandlerEmail}
             />
@@ -132,7 +131,7 @@ export default function SignUp() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="/signin" variant="body2">
+                <Link href="/auth/signin" variant="body2">
                   {"Already have an account? Sign In instead"}
                 </Link>
               </Grid>
