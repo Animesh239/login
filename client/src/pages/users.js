@@ -1,12 +1,10 @@
 import React, {
   useState,
   useEffect,
-  useCallback,
-//   useContext,
-//   createContext,
+  useCallback
 } from "react";
 
-
+import './Users.css';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -17,7 +15,8 @@ const Users = () => {
     try {
       const response = await fetch("http://localhost:8000/");
       const usersData = await response.json();
-      setUsers(usersData.loggedInUsers);
+      setUsers(usersData.users);
+      
     } catch (err) {
       // Error handling would be implemented here
       console.log(err);
@@ -28,12 +27,35 @@ const Users = () => {
     try {
         const response = await fetch("http://localhost:8000/auth/signin");
         const usersData = await response.json();
-        setLoggedUser(usersData.users);
+        setLoggedUser(usersData.loggedInUsers);
+        // const mailresponse = await fetch("http://localhost:8000/");
+        // const usersDataMail = await response.json();
+        
       } catch (err) {
         // Error handling would be implemented here
         console.log(err);
       }
   },[])
+
+  const authenticateUser = async (useremail) => {
+    const response = await fetch(`http://localhost:8000/auth/signin`, {
+      method: 'POST',
+      body: JSON.stringify({ email: useremail }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  
+    if (response.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const isAuth = loggedUser.filter((loggedUser) => {
+    return authenticateUser(loggedUser.email);
+  });
 
   useEffect(() => {
     getUsers();
@@ -49,13 +71,13 @@ const Users = () => {
     <React.Fragment>
       {
         // Check the user's authentication status
-        loggedUser && users && (
+         users && isAuth && (
           <ul className="users__list">
             {users.map((user) => (
               <li key={user.id}>
                 <span>{user.name}</span>
                 <span>{user.email}</span>
-                <span>{user.name}</span>
+                
               </li>
             ))}
           </ul>

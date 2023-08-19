@@ -8,7 +8,6 @@ function Home() {
     <>
     <ResponsiveAppBar/>
     <Users/>
-    
     </>
   );
   
