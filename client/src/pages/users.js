@@ -69,18 +69,22 @@ const Users = () => {
 
   return (
     <React.Fragment>
+       
       {
         // Check the user's authentication status
-         users && isAuth && (
+        
+         (users && isAuth) ? (
           <ul className="users__list">
             {users.map((user) => (
               <li key={user.id}>
                 <span>{user.name}</span>
                 <span>{user.email}</span>
-                
               </li>
             ))}
           </ul>
+        ):(
+          
+          <h1>Please login to connect.io</h1>
         )
       }
     </React.Fragment>
