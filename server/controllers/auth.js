@@ -24,7 +24,6 @@ exports.postSignUp = (req, res, next) => {
     message: "new User added",
     userDetails: newUser,
   });
-  res.redirect('/auth/signin')
 };
 
 exports.postSignIn = async (req, res, next) => {
@@ -59,7 +58,6 @@ exports.postSignIn = async (req, res, next) => {
     messsage: "user authenticated",
     user: user,
   });
-  res.redirect('/');
 };
 
 exports.getLoggedInUsers = (req, res, next) => {
