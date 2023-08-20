@@ -1,7 +1,9 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const authRoutes = require("./routes/auth");
+const { default: mongoose } = require("mongoose");
 const app = express();
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -24,4 +26,11 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 
-app.listen(8000);
+mongoose
+  .connect(
+    'mongodb+srv://animesh239:23YOLhF9Af76JrG2@cluster0.siifij6.mongodb.net/'
+  )
+  .then(result => {
+    app.listen(8000)
+  })
+  .catch(err => console.log(err));
