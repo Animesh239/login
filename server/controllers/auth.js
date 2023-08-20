@@ -1,5 +1,10 @@
-let users = [];
-let loggedInUsers = [];
+// let users = [];
+// let loggedInUsers = [];
+
+const User = require("../models/user");
+
+// const loggedInUser = require("../models/loggedInUser");
+
 
 exports.getUsers = (req, res, next) => {
   // Pass the `isAuthenticated` prop from the server to the client
@@ -10,29 +15,32 @@ exports.getUsers = (req, res, next) => {
 };
 
 exports.postSignUp = (req, res, next) => {
-  const newUser = {
-    id: new Date().toISOString(),
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    is_logged_in: false
-  };
-
-  users.push(newUser);
-  // res.redirect('/auth/signin')
-  res.json({
-    message: "new User added",
-    userDetails: newUser,
+  const name = req.body.name;
+  const email = req.body.email;
+  const password = req.body.password;
+  const user = new User({
+    name: name,
+    email: email,
+    password: password, // use bcrypt later
+    is_logged_in: false,
   });
+  user.save();
+
+  // users.push(newUser);
+  // res.redirect('/auth/signin')
+  res
+    .json({
+      message: "new User added",
+      userDetails: newUser,
+    })
+    .redirect("/auth/signin");
 };
 
 exports.postSignIn = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  const user = await users.find((user) => {
-    return user.email === email;
-  });
+  const user = await User.findOne({ email: email });
 
   if (!user) {
     return res.json({ message: "email does not exist" });
@@ -42,34 +50,32 @@ exports.postSignIn = async (req, res, next) => {
     return res.json({ message: "invalid password" });
   }
 
-    // Update the user's is_logged_in status to true
-    user.is_logged_in = true;
-
-    // Save the user
-    
-  
+  user.is_logged_in = true;
 
   console.log("user loggedin successfully");
 
-  // res.redirect('/')
-    
-
-  res.json({
-    messsage: "user authenticated",
-    user: user,
-  });
+  res
+    .json({
+      messsage: "user authenticated",
+      user: user,
+    })
+    .redirect("/");
 };
 
-exports.getLoggedInUsers = (req, res, next) => {
+exports.getLoggedInUsers = async(req, res, next) => {
+  // for (let user of User) {
+  //   if (user.is_logged_in) {
+  //     LoggedInUser.save(user);
+  //   }
+  // }
+  const liveUsers = await User.find((user)=>{
+    user.is_logged_in === true 
+  })
+  
 
-  for (let user of users) {
-    if (user.is_logged_in) {
-      loggedInUsers.push(user);
-    }
-  }
 
   res.json({
     message: "Logged in users",
-    loggedInUsers: loggedInUsers,
+    loggedInUsers: liveUsers,
   });
-};
+};    
